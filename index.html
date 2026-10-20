@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velvet Labs Ltd. | Websites • Brands • Growth</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome for sleek luxury icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts: Cormorant Garamond & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              black: '#070709',
+              dark: '#0c0d12',
+              card: '#12131a',
+              gold: '#e7d7b7',
+              goldLight: '#f6ecda',
+              goldMuted: '#9e9079',
+              goldBorder: 'rgba(231, 215, 183, 0.18)',
+              accent: '#d4b77f'
+            }
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #070709;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2b2926;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #d4b77f;
+    }
+
+    /* Ambient background glow */
+    .radial-ambient {
+      background: radial-gradient(circle at 50% 20%, rgba(212, 183, 127, 0.08) 0%, rgba(7, 7, 9, 0) 70%);
+    }
+
+    /* Glassmorphism surfaces */
+    .glass-nav {
+      background: rgba(7, 7, 9, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(231, 215, 183, 0.12);
+    }
+    
+    .glass-card {
+      background: rgba(18, 19, 26, 0.65);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(231, 215, 183, 0.12);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(231, 215, 183, 0.45);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 30px -10px rgba(212, 183, 127, 0.12);
+    }
+
+    /* Gold gradient text */
+    .text-gold-gradient {
+      background: linear-gradient(135deg, #ffffff 10%, #f6ecda 40%, #d4b77f 80%, #9e9079 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Gold Button Glow */
+    .btn-gold {
+      background: linear-gradient(135deg, #f6ecda 0%, #d4b77f 50%, #ad8a4e 100%);
+      color: #070709;
+      box-shadow: 0 4px 20px rgba(212, 183, 127, 0.25);
+      transition: all 0.3s ease;
+    }
+
+    .btn-gold:hover {
+      box-shadow: 0 6px 26px rgba(212, 183, 127, 0.45);
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    /* Noise overlay for high-end feel */
+    .bg-noise {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+  </style>
+</head>
+<body class="bg-brand-black text-gray-300 font-sans antialiased overflow-x-hidden selection:bg-brand-accent selection:text-brand-black relative min-h-screen">
+
+  <!-- 3D Background Canvas -->
+  <div id="canvas-container" class="fixed inset-0 pointer-events-none z-0 opacity-70"></div>
+
+  <!-- Noise texture overlay -->
+  <div class="fixed inset-0 bg-noise pointer-events-none z-0"></div>
+
+  <!-- HEADER -->
+  <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo / Identity -->
+      <a href="#hero" class="flex items-center gap-3.5 group">
+        <div class="relative w-11 h-11 rounded-full p-[1px] bg-gradient-to-tr from-brand-goldMuted via-brand-goldLight to-brand-accent shadow-[0_0_15px_rgba(212,183,127,0.3)] transition-transform duration-300 group-hover:scale-105">
+          <!-- Embedded SVG matching the provided brand emblem -->
+          <svg class="w-full h-full rounded-full bg-brand-black" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="95" stroke="url(#goldGradRing)" stroke-width="3"/>
+            <!-- 'V' shape -->
+            <path d="M 46 52 L 72 52 L 98 122 L 84 122 L 52 52 Z" fill="url(#goldGradVL)"/>
+            <!-- 'L' stem and swoosh curve interlocking with V -->
+            <path d="M 112 52 L 126 52 L 126 122 L 158 122 L 158 132 L 98 132 L 98 122 L 112 122 Z" fill="url(#goldGradVL)"/>
+            <!-- Signature sweeping fluid curve across the letters -->
+            <path d="M 68 88 C 82 108, 118 108, 155 76 C 142 86, 126 94, 110 96 C 92 98, 79 92, 68 88 Z" fill="url(#goldGradVL)"/>
+            <defs>
+              <linearGradient id="goldGradRing" x1="20" y1="20" x2="180" y2="180" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FFFFFF"/>
+                <stop offset="0.45" stop-color="#f6ecda"/>
+                <stop offset="0.8" stop-color="#d4b77f"/>
+                <stop offset="1" stop-color="#7e6c46"/>
+              </linearGradient>
+              <linearGradient id="goldGradVL" x1="50" y1="50" x2="150" y2="140" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FFFFFF"/>
+                <stop offset="0.3" stop-color="#f6ecda"/>
+                <stop offset="0.75" stop-color="#d4b77f"/>
+                <stop offset="1" stop-color="#90794b"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <div class="flex flex-col">
+          <span class="font-serif tracking-[0.22em] text-lg sm:text-xl font-bold uppercase text-gold-gradient leading-none">
+            Velvet Labs
+          </span>
+          <span class="text-[9px] tracking-[0.25em] text-brand-goldMuted uppercase mt-1">
+            Websites • Brands • Growth
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Items -->
+      <nav class="hidden md:flex items-center gap-8 text-xs uppercase tracking-[0.2em] font-medium text-gray-300">
+        <a href="#about" class="hover:text-brand-gold transition-colors duration-200">About</a>
+        <a href="#services" class="hover:text-brand-gold transition-colors duration-200">Capabilities</a>
+        <a href="#portfolio" class="hover:text-brand-gold transition-colors duration-200">Creations</a>
+        <a href="#contact" class="hover:text-brand-gold transition-colors duration-200">Contact</a>
+      </nav>
+
+      <!-- Action Button: Register (Opens Google Form in External Tab) -->
+      <div class="flex items-center gap-3">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeshAQPlwwMhQjYo7L7crIMktatgC6v6_HRPauj4GxJHOCubw/viewform?usp=dialog" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           onclick="openRegisterForm(event)"
+           class="register-btn btn-gold text-xs uppercase tracking-widest font-semibold px-5 py-2.5 rounded-full inline-flex items-center gap-2 cursor-pointer">
+          <span>Register</span>
+          <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-toggle" aria-label="Toggle navigation menu" class="md:hidden p-2 text-brand-gold hover:text-white transition">
+          <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-brand-dark/95 border-b border-brand-goldBorder px-6 py-6 transition-all duration-300">
+      <div class="flex flex-col gap-4 text-xs uppercase tracking-widest font-medium text-gray-300">
+        <a href="#about" class="mobile-nav-link hover:text-brand-gold py-1">About</a>
+        <a href="#services" class="mobile-nav-link hover:text-brand-gold py-1">Capabilities</a>
+        <a href="#portfolio" class="mobile-nav-link hover:text-brand-gold py-1">Creations</a>
+        <a href="#contact" class="mobile-nav-link hover:text-brand-gold py-1">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10 pt-24">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="min-h-[88vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 relative">
+      <div class="max-w-4xl mx-auto text-center flex flex-col items-center">
+        
+        <!-- Tagline pill -->
+        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-brand-gold/30 bg-brand-gold/5 backdrop-blur-md mb-8">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse"></span>
+          <span class="text-[11px] sm:text-xs tracking-[0.25em] uppercase font-semibold text-brand-gold">
+            Next-Gen Digital Studio
+          </span>
+        </div>
+
+        <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-normal leading-[1.1] tracking-tight mb-6">
+          Architecting <span class="italic font-light text-gold-gradient">Luxury Digital</span> Experiences & Scale
+        </h1>
+
+        <p class="max-w-2xl text-base sm:text-lg text-gray-400 font-light leading-relaxed mb-10">
+          Velvet Labs Ltd. crafts bespoke digital masterpieces, immersive web platforms, and enduring brand identities calibrated for industry leaders and visionary creators.
+        </p>
+
+        <!-- CTA Row -->
+        <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+          <!-- Register Button Linking to Google Form -->
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeshAQPlwwMhQjYo7L7crIMktatgC6v6_HRPauj4GxJHOCubw/viewform?usp=dialog" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             onclick="openRegisterForm(event)"
+             class="register-btn btn-gold w-full sm:w-auto px-8 py-3.5 rounded-full font-semibold text-xs tracking-[0.2em] uppercase flex items-center justify-center gap-2.5 group cursor-pointer">
+            <span>Register With Us</span>
+            <i class="fa-solid fa-arrow-right text-xs transition-transform duration-300 group-hover:translate-x-1"></i>
+          </a>
+
+          <!-- Connect CTA -->
+          <a href="#contact" 
+             class="w-full sm:w-auto px-8 py-3.5 rounded-full border border-brand-goldBorder hover:border-brand-gold/50 bg-white/[0.02] text-xs tracking-[0.2em] uppercase text-brand-goldLight font-medium transition duration-300 text-center">
+            Explore Details
+          </a>
+        </div>
+
+        <!-- Interactive 3D Orbit Tip -->
+        <div class="mt-14 flex items-center gap-2 text-[11px] text-brand-goldMuted/70 tracking-widest uppercase">
+          <i class="fa-solid fa-arrows-spin text-xs"></i>
+          <span>Move mouse or swipe on screen to interact with 3D space</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-24 px-4 sm:px-6 lg:px-8 border-t border-brand-goldBorder/40">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <div class="lg:col-span-5">
+            <span class="text-xs tracking-[0.3em] uppercase text-brand-gold font-semibold block mb-2">Our Philosophy</span>
+            <h2 class="font-serif text-3xl sm:text-4xl text-white font-normal mb-6">
+              Where sophisticated artistry meets robust technology.
+            </h2>
+            <div class="h-0.5 w-16 bg-gradient-to-r from-brand-gold to-transparent mb-6"></div>
+          </div>
+
+          <div class="lg:col-span-7 space-y-6 text-gray-400 font-light leading-relaxed">
+            <p>
+              At <strong class="text-brand-goldLight font-medium">Velvet Labs Ltd.</strong>, we recognize that true digital prestige is not merely aesthetic—it is an intricate synergy between ultra-clean design architecture, fluid kinetic feedback, and quantifiable business growth.
+            </p>
+            <p>
+              From hyper-refined brand narratives to cloud-native interactive web applications, we engineer high-performance platforms that resonate deeply with audiences and drive tangible conversions globally.
+            </p>
+            
+            <!-- Quick Metrics -->
+            <div class="grid grid-cols-3 gap-6 pt-6 border-t border-brand-goldBorder/30">
+              <div>
+                <p class="font-serif text-3xl sm:text-4xl text-brand-gold font-light">100%</p>
+                <p class="text-[11px] uppercase tracking-wider text-gray-400 mt-1">Bespoke Design</p>
+              </div>
+              <div>
+                <p class="font-serif text-3xl sm:text-4xl text-brand-gold font-light">&lt;0.5s</p>
+                <p class="text-[11px] uppercase tracking-wider text-gray-400 mt-1">Optimized Speed</p>
+              </div>
+              <div>
+                <p class="font-serif text-3xl sm:text-4xl text-brand-gold font-light">360°</p>
+                <p class="text-[11px] uppercase tracking-wider text-gray-400 mt-1">Growth Engine</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE CAPABILITIES (SERVICES) -->
+    <section id="services" class="py-24 px-4 sm:px-6 lg:px-8 bg-brand-dark/50 border-t border-brand-goldBorder/40">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="text-center max-w-2xl mx-auto mb-16">
+          <span class="text-xs tracking-[0.3em] uppercase text-brand-gold font-semibold block mb-2">Pillars of Excellence</span>
+          <h2 class="font-serif text-3xl sm:text-5xl text-white font-normal mb-4">Websites. Brands. Growth.</h2>
+          <p class="text-sm text-gray-400">Everything needed to establish absolute digital authority in your category.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Card 1 -->
+          <div class="glass-card p-8 rounded-2xl flex flex-col justify-between">
+            <div>
+              <div class="w-14 h-14 rounded-xl border border-brand-gold/30 bg-brand-gold/5 flex items-center justify-center text-brand-gold text-2xl mb-6">
+                <i class="fa-solid fa-code"></i>
+              </div>
+              <h3 class="font-serif text-2xl text-white font-normal mb-3">Websites & 3D Web</h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                Custom built frontends and full-stack web architectures utilizing modern frameworks, three-dimensional shaders, high response rate, and fluid micro-interactions.
+              </p>
+            </div>
+            <ul class="text-xs space-y-2.5 text-gray-400 border-t border-brand-goldBorder/30 pt-6">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-gold text-[10px]"></i> Dynamic 3D WebGL / Three.js</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-gold text-[10px]"></i> Ultra-fluid Mobile Responsiveness</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-gold text-[10px]"></i> Headless CMS Integration</li>
+            </ul>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="glass-card p-8 rounded-2xl flex flex-col justify-between">
+            <div>
+              <div class="w-14 h-14 rounded-xl border border-brand-gold/30 bg-brand-gold/5 flex items-center justify-center text-brand-gold text-2xl mb-6">
+                <i class="fa-solid fa-compass-drafting"></i>
+              </div>
+              <h3 class="font-serif text-2xl text-white font-normal mb-3">Luxury Brand Identity</h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                Cohesive identity systems designed to evoke prestige and exclusivity. We forge iconography, typography guidelines, and digital brand voice manuals that mesmerize.
+              </p>
+            </div>
+            <ul class="text-xs space-y-2.5 text-gray-400 border-t border-brand-goldBorder/30 pt-6">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-gold text-[10px]"></i> Logo Systems & Vector Geometry</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-gold text-[10px]"></i> High-End Typography & Palettes</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-gold text-[10px]"></i> Strategic Visual Guidelines</li>
+            </ul>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="glass-card p-8 rounded-2xl flex flex-col justify-between">
+            <div>
+              <div class="w-14 h-14 rounded-xl border border-brand-gold/30 bg-brand-gold/5 flex items-center justify-center text-brand-gold text-2xl mb-6">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+              </div>
+              <h3 class="font-serif text-2xl text-white font-normal mb-3">Growth & Optimization</h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                Data-guided scaling mechanisms, conversion rate optimization (CRO), modern SEO foundations, and client engagement funnels built for sustainable compound results.
+              </p>
+            </div>
+            <ul class="text-xs space-y-2.5 text-gray-400 border-t border-brand-goldBorder/30 pt-6">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-gold text-[10px]"></i> Conversion Funnel Optimization</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-gold text-[10px]"></i> Technical & On-Page SEO</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-gold text-[10px]"></i> Rapid Acquisition Strategy</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PORTFOLIO SHOWCASE -->
+    <section id="portfolio" class="py-24 px-4 sm:px-6 lg:px-8 border-t border-brand-goldBorder/40">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div>
+            <span class="text-xs tracking-[0.3em] uppercase text-brand-gold font-semibold block mb-2">Curated Selections</span>
+            <h2 class="font-serif text-3xl sm:text-5xl text-white font-normal">Recent Work & Concepts</h2>
+          </div>
+          <p class="text-sm text-gray-400 max-w-md">
+            A glimpse into digital spaces engineered with precision, restraint, and an uncompromising focus on quality.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Project 1 -->
+          <div class="glass-card rounded-2xl overflow-hidden group">
+            <div class="h-56 bg-gradient-to-br from-brand-card via-black to-[#191924] relative flex items-center justify-center border-b border-brand-goldBorder/30 p-6 overflow-hidden">
+              <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-gold/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <!-- Graphic Accent -->
+              <div class="w-24 h-24 rounded-full border border-brand-gold/30 flex items-center justify-center transform transition duration-500 group-hover:scale-110">
+                <i class="fa-solid fa-gem text-3xl text-brand-gold"></i>
+              </div>
+            </div>
+            <div class="p-6">
+              <span class="text-[10px] tracking-widest uppercase text-brand-gold font-semibold">Fintech Platform</span>
+              <h3 class="font-serif text-xl text-white mt-1 mb-2">Aura Sovereign Capital</h3>
+              <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                Interactive private wealth portal with live shader graphics and encrypted stakeholder communications.
+              </p>
+              <div class="flex items-center gap-2 text-[10px] uppercase tracking-wider text-brand-gold">
+                <span>UI/UX</span> • <span>WebGL</span> • <span>Cloud</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="glass-card rounded-2xl overflow-hidden group">
+            <div class="h-56 bg-gradient-to-br from-[#111218] via-black to-[#1c1822] relative flex items-center justify-center border-b border-brand-goldBorder/30 p-6 overflow-hidden">
+              <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-gold/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="w-24 h-24 rounded-2xl border border-brand-gold/30 flex items-center justify-center transform rotate-6 transition duration-500 group-hover:rotate-0 group-hover:scale-110">
+                <i class="fa-solid fa-fingerprint text-3xl text-brand-gold"></i>
+              </div>
+            </div>
+            <div class="p-6">
+              <span class="text-[10px] tracking-widest uppercase text-brand-gold font-semibold">Luxury E-Commerce</span>
+              <h3 class="font-serif text-xl text-white mt-1 mb-2">Maison De Soie</h3>
+              <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                High-end bespoke couture showcase featuring real-time 3D fabric simulations and global dispatch integration.
+              </p>
+              <div class="flex items-center gap-2 text-[10px] uppercase tracking-wider text-brand-gold">
+                <span>E-Commerce</span> • <span>Brand System</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="glass-card rounded-2xl overflow-hidden group">
+            <div class="h-56 bg-gradient-to-br from-[#0c0e14] via-black to-[#131b26] relative flex items-center justify-center border-b border-brand-goldBorder/30 p-6 overflow-hidden">
+              <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-gold/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="w-24 h-24 rounded-full border border-brand-gold/30 flex items-center justify-center transform transition duration-500 group-hover:scale-110">
+                <i class="fa-solid fa-cube text-3xl text-brand-gold"></i>
+              </div>
+            </div>
+            <div class="p-6">
+              <span class="text-[10px] tracking-widest uppercase text-brand-gold font-semibold">Architectural Tech</span>
+              <h3 class="font-serif text-xl text-white mt-1 mb-2">Verve Structural Labs</h3>
+              <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                Parametric CAD visualization interface enabling real estate developers to render blueprints in browser canvases.
+              </p>
+              <div class="flex items-center gap-2 text-[10px] uppercase tracking-wider text-brand-gold">
+                <span>Three.js</span> • <span>Next.js</span> • <span>Growth</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Registration Callout Banner inside Portfolio -->
+        <div class="mt-16 glass-card p-8 sm:p-12 rounded-3xl text-center relative overflow-hidden">
+          <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-brand-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+          <h3 class="font-serif text-2xl sm:text-4xl text-white font-normal mb-3">
+            Ready to Build Your Brand’s Next Chapter?
+          </h3>
+          <p class="text-sm text-gray-400 max-w-xl mx-auto mb-8">
+            Register your project inquiry, partnership proposition, or technical consultation directly via our official intake gateway.
+          </p>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeshAQPlwwMhQjYo7L7crIMktatgC6v6_HRPauj4GxJHOCubw/viewform?usp=dialog" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             onclick="openRegisterForm(event)"
+             class="register-btn btn-gold inline-flex items-center gap-3 px-8 py-3.5 rounded-full text-xs font-semibold tracking-[0.2em] uppercase cursor-pointer">
+            <span>Open Registration Form</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER & CONTACT SECTION -->
+  <footer id="contact" class="relative z-10 border-t border-brand-goldBorder/60 bg-brand-dark pt-20 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Contact Header -->
+      <div class="max-w-2xl mx-auto text-center mb-16">
+        <span class="text-xs tracking-[0.3em] uppercase text-brand-gold font-semibold block mb-2">Direct Inquiries</span>
+        <h2 class="font-serif text-3xl sm:text-5xl text-white font-normal mb-4">Get in Touch</h2>
+        <p class="text-sm text-gray-400">
+          Click below to initiate an instant correspondence directly via Gmail or WhatsApp.
+        </p>
+      </div>
+
+      <!-- Contact Interaction Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-20">
+        
+        <!-- EMAIL CARD: Direct Gmail Opener -->
+        <!-- Opens directly in Gmail Web Composer in a new tab with prefilled 'to' address -->
+        <a id="email-contact-link" 
+           href="https://mail.google.com/mail/?view=cm&fs=1&to=velvetlabs4@gmail.com&su=Inquiry%20for%20Velvet%20Labs%20Ltd." 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="glass-card p-8 rounded-2xl flex items-center gap-6 group hover:border-brand-gold transition duration-300">
+          <div class="w-16 h-16 rounded-2xl border border-brand-gold/30 bg-brand-gold/10 flex-shrink-0 flex items-center justify-center text-brand-gold text-2xl group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <span class="text-[11px] uppercase tracking-widest text-brand-gold font-medium block">Compose in Gmail</span>
+            <span class="text-base sm:text-lg font-medium text-white truncate block mt-1 group-hover:text-brand-goldLight transition-colors">
+              velvetlabs4@gmail.com
+            </span>
+            <span class="text-xs text-gray-400 mt-1 inline-flex items-center gap-1.5">
+              <span>Open in Gmail tab</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-brand-gold"></i>
+            </span>
+          </div>
+        </a>
+
+        <!-- MOBILE / WHATSAPP CARD: Direct WhatsApp Chat Opener -->
+        <!-- Opens direct WhatsApp conversation to +919712917179 -->
+        <a id="whatsapp-contact-link" 
+           href="https://wa.me/919712917179?text=Hello%20Velvet%20Labs%2C%20I%20would%20like%20to%20inquire%20about%20your%20services." 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="glass-card p-8 rounded-2xl flex items-center gap-6 group hover:border-[#25D366]/60 transition duration-300">
+          <div class="w-16 h-16 rounded-2xl border border-[#25D366]/30 bg-[#25D366]/10 flex-shrink-0 flex items-center justify-center text-[#25D366] text-2xl group-hover:scale-110 transition-transform">
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <span class="text-[11px] uppercase tracking-widest text-brand-gold font-medium block">WhatsApp Direct Chat</span>
+            <span class="text-base sm:text-lg font-medium text-white truncate block mt-1 group-hover:text-brand-goldLight transition-colors">
+              +91 97129 17179
+            </span>
+            <span class="text-xs text-gray-400 mt-1 inline-flex items-center gap-1.5">
+              <span>Start WhatsApp chat</span>
+              <i class="fa-solid fa-comment-dots text-[10px] text-[#25D366]"></i>
+            </span>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Quick Action Floating/Registration Link Bar -->
+      <div class="py-10 border-t border-brand-goldBorder/30 flex flex-col md:flex-row items-center justify-between gap-6">
+        
+        <div class="flex items-center gap-3">
+          <!-- Logo in footer -->
+          <div class="w-8 h-8 rounded-full border border-brand-gold/40 p-0.5">
+            <svg class="w-full h-full" viewBox="0 0 200 200" fill="none">
+              <circle cx="100" cy="100" r="95" stroke="#d4b77f" stroke-width="4"/>
+              <path d="M 46 52 L 72 52 L 98 122 L 84 122 L 52 52 Z" fill="#d4b77f"/>
+              <path d="M 112 52 L 126 52 L 126 122 L 158 122 L 158 132 L 98 132 L 98 122 L 112 122 Z" fill="#d4b77f"/>
+              <path d="M 68 88 C 82 108, 118 108, 155 76 C 142 86, 126 94, 110 96 C 92 98, 79 92, 68 88 Z" fill="#d4b77f"/>
+            </svg>
+          </div>
+          <div class="text-left">
+            <p class="font-serif text-sm font-semibold tracking-widest text-white uppercase">Velvet Labs Ltd.</p>
+            <p class="text-[10px] tracking-widest text-gray-400 uppercase">Crafting High-Conversion Digital Prestige</p>
+          </div>
+        </div>
+
+        <!-- Google Form External link reminder -->
+        <div class="flex items-center gap-4">
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeshAQPlwwMhQjYo7L7crIMktatgC6v6_HRPauj4GxJHOCubw/viewform?usp=dialog" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             onclick="openRegisterForm(event)"
+             class="register-btn text-xs uppercase tracking-widest text-brand-gold hover:text-white transition flex items-center gap-2 cursor-pointer">
+            <span>Client Registration Form</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Copyright Bottom Bar -->
+    <div class="pt-8 border-t border-brand-goldBorder/20 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 gap-4">
+      <p>© <span id="current-year"></span> Velvet Labs Ltd. All rights reserved.</p>
+      <div class="flex items-center gap-6">
+        <span class="hover:text-gray-300">Privacy Policy</span>
+        <span>•</span>
+        <span class="hover:text-gray-300">Terms of Engagement</span>
+        <span>•</span>
+        <span class="hover:text-gray-300">Confidentiality</span>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+  <!-- Fallback Dialog for strict iframe popup environments -->
+  <div id="form-fallback-modal" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="glass-card bg-brand-dark border border-brand-gold/40 p-6 sm:p-8 rounded-2xl max-w-md w-full text-center relative shadow-2xl">
+      <button onclick="closeFallbackModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      <div class="w-12 h-12 rounded-full border border-brand-gold/40 bg-brand-gold/10 text-brand-gold flex items-center justify-center mx-auto mb-4 text-xl">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </div>
+      <h3 class="font-serif text-2xl text-white mb-2">Open Registration Form</h3>
+      <p class="text-xs text-gray-400 leading-relaxed mb-6">
+        If your browser prevented the automatic pop-up window, click the direct button below to navigate to the Google Form.
+      </p>
+      <div class="flex flex-col gap-3">
+        <a id="modal-direct-link" href="https://docs.google.com/forms/d/e/1FAIpQLSeshAQPlwwMhQjYo7L7crIMktatgC6v6_HRPauj4GxJHOCubw/viewform?usp=dialog" target="_blank" rel="noopener noreferrer"
+           class="btn-gold py-3 px-6 rounded-full text-xs font-semibold uppercase tracking-widest block text-center">
+          Open Google Form Now
+        </a>
+        <button onclick="closeFallbackModal()" class="py-2.5 px-6 rounded-full text-xs text-gray-400 hover:text-white border border-white/10 uppercase tracking-widest">
+          Dismiss
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT SECTION: Three.js 3D Animation & Interactivity -->
+  <script>
+    const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeshAQPlwwMhQjYo7L7crIMktatgC6v6_HRPauj4GxJHOCubw/viewform?usp=dialog";
+
+    // Reliable form launch function that opens in a new browser tab
+    function openRegisterForm(event) {
+      if (event) {
+        event.preventDefault();
+      }
+
+      try {
+        // Explicitly open in a new tab/window
+        const newWin = window.open(FORM_URL, '_blank', 'noopener,noreferrer');
+        
+        // If the browser/iframe sandbox blocks popup windows, display fallback modal
+        if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
+          showFallbackModal();
+        }
+      } catch (err) {
+        showFallbackModal();
+      }
+    }
+
+    function showFallbackModal() {
+      const modal = document.getElementById('form-fallback-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      } else {
+        // Absolute fallback: top-level direct navigation
+        window.location.href = FORM_URL;
+      }
+    }
+
+    function closeFallbackModal() {
+      const modal = document.getElementById('form-fallback-modal');
+      if (modal) {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      }
+    }
+
+    // Set dynamic current year in footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // Mobile Navigation Drawer Toggle
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+
+    mobileToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      if (mobileMenu.classList.contains('hidden')) {
+        menuIcon.classList.remove('fa-xmark');
+        menuIcon.classList.add('fa-bars');
+      } else {
+        menuIcon.classList.remove('fa-bars');
+        menuIcon.classList.add('fa-xmark');
+      }
+    });
+
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuIcon.classList.remove('fa-xmark');
+        menuIcon.classList.add('fa-bars');
+      });
+    });
+
+    /* =========================================================
+       THREE.JS 3D SCENE: Gold Geometric Kinetic Velvet Core
+       ========================================================= */
+    window.addEventListener('load', () => {
+      const container = document.getElementById('canvas-container');
+      
+      // Scene, Camera, Renderer
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 24;
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // Create Group for objects
+      const worldGroup = new THREE.Group();
+      scene.add(worldGroup);
+
+      // 1. Luxury Gold Torus Knot (Geometric Ribbon representing Velvet folds)
+      const knotGeo = new THREE.TorusKnotGeometry(6.2, 1.4, 130, 24, 2, 3);
+      const knotMat = new THREE.MeshStandardMaterial({
+        color: 0xd4b77f,
+        roughness: 0.28,
+        metalness: 0.85,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.22
+      });
+      const torusKnot = new THREE.Mesh(knotGeo, knotMat);
+      worldGroup.add(torusKnot);
+
+      // 2. Inner Golden Polyhedron (Icosahedron)
+      const icoGeo = new THREE.IcosahedronGeometry(3.5, 1);
+      const icoMat = new THREE.MeshStandardMaterial({
+        color: 0xf6ecda,
+        roughness: 0.15,
+        metalness: 0.95,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.35
+      });
+      const innerCore = new THREE.Mesh(icoGeo, icoMat);
+      worldGroup.add(innerCore);
+
+      // 3. Orbiting Gold Particle Dust
+      const particleCount = 280;
+      const particleGeo = new THREE.BufferGeometry();
+      const positions = new Float32Array(particleCount * 3);
+      const scales = new Float32Array(particleCount);
+
+      for (let i = 0; i < particleCount * 3; i += 3) {
+        positions[i] = (Math.random() - 0.5) * 55;
+        positions[i + 1] = (Math.random() - 0.5) * 55;
+        positions[i + 2] = (Math.random() - 0.5) * 40;
+      }
+
+      particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+      // Simple round particle texture using offscreen canvas
+      const pCanvas = document.createElement('canvas');
+      pCanvas.width = 16;
+      pCanvas.height = 16;
+      const pCtx = pCanvas.getContext('2d');
+      const grad = pCtx.createRadialGradient(8, 8, 0, 8, 8, 8);
+      grad.addColorStop(0, 'rgba(246, 236, 218, 1)');
+      grad.addColorStop(0.5, 'rgba(212, 183, 127, 0.6)');
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      pCtx.fillStyle = grad;
+      pCtx.fillRect(0, 0, 16, 16);
+
+      const pTexture = new THREE.CanvasTexture(pCanvas);
+      const particleMat = new THREE.PointsMaterial({
+        size: 0.75,
+        map: pTexture,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+      const particles = new THREE.Points(particleGeo, particleMat);
+      worldGroup.add(particles);
+
+      // Lights
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+      scene.add(ambientLight);
+
+      const pointLight1 = new THREE.PointLight(0xf6ecda, 1.8, 100);
+      pointLight1.position.set(20, 20, 20);
+      scene.add(pointLight1);
+
+      const pointLight2 = new THREE.PointLight(0xb58b43, 1.2, 100);
+      pointLight2.position.set(-20, -15, 10);
+      scene.add(pointLight2);
+
+      // User Interaction tracking (Mouse & Touch)
+      let mouseX = 0;
+      let mouseY = 0;
+      let targetX = 0;
+      let targetY = 0;
+
+      const windowHalfX = window.innerWidth / 2;
+      const windowHalfY = window.innerHeight / 2;
+
+      function onPointerMove(event) {
+        let clientX = event.clientX;
+        let clientY = event.clientY;
+
+        if (event.touches && event.touches.length > 0) {
+          clientX = event.touches[0].clientX;
+          clientY = event.touches[0].clientY;
+        }
+
+        mouseX = (clientX - windowHalfX) * 0.001;
+        mouseY = (clientY - windowHalfY) * 0.001;
+      }
+
+      window.addEventListener('mousemove', onPointerMove, { passive: true });
+      window.addEventListener('touchmove', onPointerMove, { passive: true });
+
+      // Window resize handler
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      });
+
+      // Animation loop
+      let clock = new THREE.Clock();
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        const elapsedTime = clock.getElapsedTime();
+
+        // Smooth camera dampening / cursor rotation
+        targetX += (mouseX - targetX) * 0.04;
+        targetY += (mouseY - targetY) * 0.04;
+
+        worldGroup.rotation.y = targetX * 1.5 + elapsedTime * 0.06;
+        worldGroup.rotation.x = targetY * 1.5 + Math.sin(elapsedTime * 0.2) * 0.1;
+
+        // Autonomous rotation of individual shapes
+        torusKnot.rotation.z = elapsedTime * 0.08;
+        innerCore.rotation.y = -elapsedTime * 0.12;
+        innerCore.rotation.x = elapsedTime * 0.1;
+
+        particles.rotation.y = -elapsedTime * 0.02;
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    });
+  </script>
+</body>
+</html>
+
