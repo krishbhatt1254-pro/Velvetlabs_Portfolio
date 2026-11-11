@@ -30,7 +30,7 @@ button{color:inherit}
 .brand img{width:55px;height:55px;object-fit:cover;border-radius:50%;border:1px solid var(--gold)}
 .brand-name{font:19px/1.1 Georgia,serif;letter-spacing:.13em}
 .brand-name small{display:block;text-align:center;font:9px/1.8 Arial,sans-serif;letter-spacing:.3em}
-.nav-links{display:flex;align-items:center;gap:23px;color:var(--muted);font-size:13px}
+.nav-links{display:flex;align-items:center;gap:23px;color:var(--muted);font-size:13px}.mobile-register-link{display:none}
 .nav-links a{padding:9px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
 .nav-links a:hover,.nav-links a.active{color:var(--gold);border-color:var(--gold)}
 .nav-actions{display:flex;align-items:center;gap:10px}
@@ -86,13 +86,12 @@ main{min-height:65vh}
 .footer-links{display:flex;gap:17px;flex-wrap:wrap}
 .footer-links a:hover{color:var(--gold)}
 .copyright{text-align:center;margin:19px 0 0}
-.mobile-nav{display:none}
-.mobile-nav.open{display:flex;flex-direction:column;gap:12px;padding:0 18px 18px;color:var(--muted);font-size:14px}
+
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 @media(max-width:900px){.nav-links{gap:12px}.brand{min-width:auto}.card-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:680px){
- .wrap{width:calc(100% - 30px)}.navbar{min-height:70px}.brand img{width:46px;height:46px}.brand-name{font-size:15px}
- .nav-links{display:none}.menu-btn{display:block}.nav-actions .btn-primary{display:none}
+ .wrap{width:calc(100% - 30px)}.navbar{min-height:70px;flex-wrap:wrap;justify-content:space-between;row-gap:2px;padding:8px 0 10px}.brand img{width:46px;height:46px}.brand-name{font-size:15px}
+ .nav-links{display:flex;order:3;flex:0 0 100%;width:100%;justify-content:flex-start;gap:clamp(14px,4vw,22px);overflow-x:auto;white-space:nowrap;scrollbar-width:none;padding:2px 0 5px;font-size:12px}.nav-links::-webkit-scrollbar{display:none}.mobile-register-link{display:inline-block}.nav-actions .btn-primary{display:none}
  .hero{grid-template-columns:1fr;padding:48px 0 45px;min-height:0;gap:12px}.hero-art{min-height:255px;order:-1}.logo-frame{width:230px}
  .hero h1{font-size:clamp(45px,13vw,64px)}.lead{font-size:14px}
  .content{padding:48px 0}.card-grid{grid-template-columns:1fr}.two-col{grid-template-columns:1fr}
@@ -112,19 +111,13 @@ main{min-height:65vh}
   <nav class="nav-links" aria-label="Main navigation">
    <a href="#home" data-page-link="home">Home</a><a href="#about" data-page-link="about">About</a>
    <a href="#services" data-page-link="services">Services</a><a href="#why-us" data-page-link="why-us">Why Us</a>
-   <a href="#contact" data-page-link="contact">Contact</a>
+   <a href="#contact" data-page-link="contact">Contact</a><a class="mobile-register-link" href="#register" data-page-link="register">Register</a>
   </nav>
   <div class="nav-actions">
    <button class="theme-btn" id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">☾</button>
    <a class="btn btn-primary" href="#register" data-page-link="register">Register Your Idea →</a>
   </div>
-  <button class="menu-btn" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
  </div>
- <nav class="mobile-nav wrap" id="mobileNav" aria-label="Mobile navigation">
-  <a href="#home" data-page-link="home">Home</a><a href="#about" data-page-link="about">About</a>
-  <a href="#services" data-page-link="services">Services</a><a href="#why-us" data-page-link="why-us">Why Us</a>
-  <a href="#contact" data-page-link="contact">Contact</a><a href="#register" data-page-link="register">Register Your Idea</a>
- </nav>
 </header>
 <main>
  <section class="page is-active" id="page-home" data-page="home">
@@ -203,8 +196,6 @@ main{min-height:65vh}
  "use strict";
  const root=document.documentElement;
  const themeButton=document.getElementById("themeToggle");
- const menuButton=document.getElementById("menuToggle");
- const mobileNav=document.getElementById("mobileNav");
  const validPages=["home","about","services","why-us","contact","register"];
 
  function applyTheme(theme){
@@ -229,9 +220,6 @@ main{min-height:65vh}
      link.classList.toggle("active",active);
      if(active) link.setAttribute("aria-current","page"); else link.removeAttribute("aria-current");
    });
-   mobileNav.classList.remove("open");
-   menuButton.setAttribute("aria-expanded","false");
-   menuButton.textContent="☰";
    if(updateHash && location.hash!=="#"+page) history.pushState({page:page},"","#"+page);
    window.scrollTo({top:0,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
    document.title=(page==="home"?"Home":page==="why-us"?"Why Us":page==="register"?"Register Your Idea":page.charAt(0).toUpperCase()+page.slice(1))+" | Velvet Labs Ltd.";
@@ -245,11 +233,6 @@ main{min-height:65vh}
  window.addEventListener("popstate",function(){showPage(location.hash.slice(1)||"home",false);});
  showPage(location.hash.slice(1)||"home",false);
 
- menuButton.addEventListener("click",function(){
-   const open=mobileNav.classList.toggle("open");
-   menuButton.setAttribute("aria-expanded",String(open));
-   menuButton.textContent=open?"×":"☰";
- });
  document.getElementById("year").textContent=String(new Date().getFullYear());
 
  const form=document.getElementById("ideaForm");
