@@ -187,9 +187,9 @@ main{min-height:65vh}
     <div class="field"><label for="mobile">Mobile Number *</label><input id="mobile" name="mobile" type="tel" autocomplete="tel" required placeholder="Your mobile number"></div>
     <div class="field full"><label for="idea">Idea of Your Website *</label><textarea id="idea" name="idea" required placeholder="Tell us about your website or project idea..."></textarea></div>
    </div>
-   <p class="note">This is a front-end demo form. Submissions are not transmitted or stored yet; connect a secure backend before collecting real inquiries.</p>
+   <p class="note">Your registration will be securely submitted to Velvet Labs. Please do not include passwords or other sensitive information.</p>
    <button class="btn btn-primary" type="submit">Submit Your Idea →</button>
-   <div class="success" id="successMessage" role="status" aria-live="polite">Your idea has been submitted. (Demo only — no data was sent or stored.)</div>
+   <div class="success" id="successMessage" role="status" aria-live="polite">Your idea has been submitted successfully. Thank you for contacting Velvet Labs!</div>
   </form></div></div>
  </section>
 </main>
@@ -252,11 +252,64 @@ main{min-height:65vh}
  document.getElementById("year").textContent=String(new Date().getFullYear());
 
  const form=document.getElementById("ideaForm");
- form.addEventListener("submit",function(event){
+ const successMessage=document.getElementById("successMessage");
+ const submitButton=form.querySelector('button[type="submit"]');
+
+ // Add your Supabase Project URL and Publishable API Key here.
+ // Use the sb_publishable_ key, NEVER a secret/service_role key.
+ const SUPABASE_URL="PASTE_YOUR_SUPABASE_PROJECT_URL";
+ const SUPABASE_PUBLISHABLE_KEY="PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY";
+
+ form.addEventListener("submit",async function(event){
    event.preventDefault();
+   successMessage.classList.remove("show");
    if(!form.reportValidity())return;
-   document.getElementById("successMessage").classList.add("show");
-   form.reset();
+
+   if(SUPABASE_URL.startsWith("PASTE_") || SUPABASE_PUBLISHABLE_KEY.startsWith("PASTE_")){
+     successMessage.textContent="Registration is not configured yet. Please try again later or email velvetlabs4@gmail.com.";
+     successMessage.classList.add("show");
+     return;
+   }
+
+   const formData=new FormData(form);
+   const registration={
+     name:String(formData.get("name")||"").trim(),
+     email:String(formData.get("email")||"").trim(),
+     instagram:String(formData.get("instagram")||"").trim(),
+     budget:String(formData.get("budget")||"").trim(),
+     mobile:String(formData.get("mobile")||"").trim(),
+     idea:String(formData.get("idea")||"").trim()
+   };
+
+   submitButton.disabled=true;
+   const originalButtonText=submitButton.textContent;
+   submitButton.textContent="Submitting...";
+   try{
+     const response=await fetch(SUPABASE_URL.replace(/\\/+$/,"")+"/rest/v1/registrations",{
+       method:"POST",
+       headers:{
+         "Content-Type":"application/json",
+         "apikey":SUPABASE_PUBLISHABLE_KEY,
+         "Authorization":"Bearer "+SUPABASE_PUBLISHABLE_KEY,
+         "Prefer":"return=minimal"
+       },
+       body:JSON.stringify(registration)
+     });
+     if(!response.ok){
+       const detail=await response.text();
+       throw new Error("Supabase returned "+response.status+": "+detail);
+     }
+     successMessage.textContent="Your idea has been submitted successfully. Thank you for contacting Velvet Labs!";
+     successMessage.classList.add("show");
+     form.reset();
+   }catch(error){
+     console.error("Registration submission failed:",error);
+     successMessage.textContent="We couldn't submit your idea right now. Please try again, or email velvetlabs4@gmail.com.";
+     successMessage.classList.add("show");
+   }finally{
+     submitButton.disabled=false;
+     submitButton.textContent=originalButtonText;
+   }
  });
 })();
 </script>
