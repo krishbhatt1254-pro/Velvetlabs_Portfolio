@@ -285,7 +285,7 @@ main{min-height:65vh}
    const originalButtonText=submitButton.textContent;
    submitButton.textContent="Submitting...";
    try{
-     const response=await fetch(SUPABASE_URL.replace(/\\/+$/,"")+"/rest/v1/registrations",{
+     const response=await fetch(SUPABASE_URL+"/rest/v1/registrations",{
        method:"POST",
        headers:{
          "Content-Type":"application/json",
