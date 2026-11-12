@@ -309,6 +309,31 @@ html[data-theme="dark"] .site-footer{background:rgba(20,18,29,.38)}
 @media(max-width:700px){.card,.panel,.hero-art,.logo-frame,.page-hero{border-radius:19px}body{background-attachment:scroll}}
 @media(prefers-reduced-motion:reduce){.card,.panel,.btn,.theme-btn,.menu-btn{transition:none}.card:hover,.panel:hover,.btn:hover,.theme-btn:hover,.menu-btn:hover{transform:none}}
 </style>
+
+<style id="velvet-global-glass">
+/* Consistent glassmorphism across every page */
+:root{--surface:rgba(255,255,255,.52);--surface-2:rgba(255,255,255,.34);--line:rgba(255,255,255,.72);--nav:rgba(255,255,255,.62);--shadow:0 18px 55px rgba(40,30,65,.10)}
+html{scroll-behavior:smooth}
+body{background-image:radial-gradient(ellipse at 12% 8%,rgba(193,178,235,.22),transparent 34%),radial-gradient(ellipse at 88% 30%,rgba(226,205,178,.18),transparent 32%)}
+.site-header,.footer,.card,.panel,.contact-card,.contact-icon,.logo-frame,.hero-art,.stat,.testimonial,.faq-item,.form-grid .field,.register-card,.btn,.theme-btn{backdrop-filter:blur(22px) saturate(145%);-webkit-backdrop-filter:blur(22px) saturate(145%)}
+.card,.panel,.contact-card,.logo-frame,.hero-art,.stat,.testimonial,.faq-item,.register-card{background:linear-gradient(135deg,rgba(255,255,255,.68),rgba(255,255,255,.34));border:1px solid rgba(255,255,255,.78);box-shadow:0 18px 48px rgba(45,35,65,.09),inset 0 1px 0 rgba(255,255,255,.72)}
+.page{isolation:isolate}
+.page-hero,.content,.hero,.section-head{position:relative}
+input,select,textarea{background:rgba(255,255,255,.58)!important;border:1px solid rgba(160,145,180,.24)!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.btn,.theme-btn{border:1px solid rgba(255,255,255,.72);box-shadow:0 8px 24px rgba(50,40,70,.08);transition:transform .25s ease,box-shadow .25s ease}
+.btn:hover,.theme-btn:hover{transform:translateY(-2px);box-shadow:0 13px 30px rgba(50,40,70,.14)}
+.site-header{background:rgba(255,255,255,.58)}
+.footer{background:rgba(255,255,255,.40);border-top:1px solid rgba(255,255,255,.72)}
+/* The dark pixels in the original logo blend into the page, leaving the cream artwork visually transparent. */
+.brand img,.logo-frame img,.footer img{mix-blend-mode:screen;background:transparent;border-color:transparent;}
+.logo-frame{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.55);box-shadow:0 18px 48px rgba(45,35,65,.08)}
+html[data-theme="dark"] body{background-image:radial-gradient(ellipse at 12% 8%,rgba(112,94,180,.18),transparent 35%),radial-gradient(ellipse at 88% 30%,rgba(142,105,76,.13),transparent 32%)}
+html[data-theme="dark"] .card,html[data-theme="dark"] .panel,html[data-theme="dark"] .contact-card,html[data-theme="dark"] .logo-frame,html[data-theme="dark"] .hero-art,html[data-theme="dark"] .stat,html[data-theme="dark"] .testimonial,html[data-theme="dark"] .faq-item,html[data-theme="dark"] .register-card{background:linear-gradient(135deg,rgba(42,39,61,.76),rgba(29,27,43,.48));border-color:rgba(255,255,255,.12);box-shadow:0 18px 48px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.08)}
+html[data-theme="dark"] input,html[data-theme="dark"] select,html[data-theme="dark"] textarea{background:rgba(30,28,45,.68)!important;border-color:rgba(255,255,255,.14)!important}
+html[data-theme="dark"] .site-header{background:rgba(24,22,38,.68)}
+html[data-theme="dark"] .footer{background:rgba(24,22,38,.48);border-color:rgba(255,255,255,.12)}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.theme-btn{transition:none}}
+</style>
 </head>
 <body>
 <header class="site-header">
