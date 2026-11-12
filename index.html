@@ -157,6 +157,45 @@ html[data-theme="dark"] #page-services{background-image:radial-gradient(ellipse 
 html[data-theme="dark"] #page-why-us{background-image:radial-gradient(ellipse at 85% 20%,rgba(82,94,170,.30),transparent 42%),linear-gradient(135deg,#1b3450 0%,#172630 52%,#101820 100%)}
 html[data-theme="dark"] #page-contact{background-image:radial-gradient(ellipse at 10% 15%,rgba(38,126,145,.30),transparent 42%),linear-gradient(145deg,#163747 0%,#172630 52%,#101820 100%)}
 html[data-theme="dark"] #page-register{background-image:radial-gradient(ellipse at 90% 12%,rgba(66,105,174,.32),transparent 42%),linear-gradient(125deg,#193650 0%,#172630 52%,#101820 100%)}
+
+/* Velvet Labs authentication */
+.auth-trigger{padding:10px 17px;font-size:12px}
+.auth-overlay{position:fixed;inset:0;z-index:2000;display:none;place-items:center;padding:22px;overflow-y:auto;background:radial-gradient(ellipse at 14% 18%,rgba(255,255,255,.92),transparent 42%),radial-gradient(ellipse at 88% 22%,rgba(245,190,235,.78),transparent 44%),radial-gradient(ellipse at 18% 88%,rgba(117,103,255,.78),transparent 42%),linear-gradient(135deg,#f5fbff 0%,#f9eaff 54%,#e6e7ff 100%)}
+.auth-overlay.is-open{display:grid;animation:authFade .35s ease both}
+.auth-overlay:before,.auth-overlay:after{content:"";position:fixed;border-radius:50%;filter:blur(36px);pointer-events:none;animation:authFloat 10s ease-in-out infinite alternate}
+.auth-overlay:before{width:240px;height:240px;background:rgba(119,103,255,.38);left:-65px;bottom:4%}
+.auth-overlay:after{width:210px;height:210px;background:rgba(245,166,225,.42);right:-55px;top:8%;animation-delay:-4s}
+.auth-card{position:relative;z-index:1;width:min(100%,460px);padding:34px 30px 27px;border:1px solid rgba(255,255,255,.72);border-radius:27px;background:rgba(255,255,255,.43);box-shadow:0 28px 90px rgba(70,58,130,.18),inset 0 1px 0 rgba(255,255,255,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);animation:authCardIn .55s cubic-bezier(.2,.8,.2,1) both}
+.auth-close{position:absolute;right:15px;top:13px;width:34px;height:34px;border:0;border-radius:50%;background:rgba(255,255,255,.42);font-size:22px;cursor:pointer}
+.auth-heading{text-align:center;margin:0 0 4px;font-size:35px;line-height:1.2;letter-spacing:-.04em;color:#242633}
+.auth-subtitle{text-align:center;margin:0 0 26px;color:#6c6d7d;font-size:14px}
+.auth-field{display:flex;flex-direction:column;gap:7px;margin:0 0 15px}
+.auth-field label{font-size:13px;font-weight:600;color:#30313d}
+.auth-field input{width:100%;height:46px;border:1px solid rgba(255,255,255,.9);border-radius:15px;padding:0 15px;background:rgba(255,255,255,.48);color:#222;font-size:14px;outline:none;box-shadow:0 5px 15px rgba(72,62,125,.05);transition:border .2s,box-shadow .2s,transform .2s}
+.auth-field input:focus{border-color:#8580ef;box-shadow:0 0 0 4px rgba(123,116,235,.13),0 8px 20px rgba(72,62,125,.08);transform:translateY(-1px)}
+.auth-submit,.auth-social{width:100%;min-height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:11px;font-size:14px;font-weight:650;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
+.auth-submit{border:0;background:#11145f;color:white;box-shadow:0 9px 22px rgba(17,20,95,.2);margin-top:3px}
+.auth-submit:hover,.auth-social:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(55,49,120,.13)}
+.auth-submit:disabled{opacity:.65;cursor:wait;transform:none}
+.auth-divider{display:flex;align-items:center;gap:12px;margin:23px 0 17px;color:#777889;font-size:11px;white-space:nowrap}
+.auth-divider:before,.auth-divider:after{content:"";height:1px;flex:1;background:rgba(255,255,255,.8)}
+.auth-social{border:1px solid rgba(255,255,255,.85);background:rgba(255,255,255,.42);color:#343543;margin-top:11px;font-weight:500}
+.auth-social svg{width:19px;height:19px;flex:0 0 19px}
+.auth-links{display:flex;justify-content:space-between;gap:12px;margin-top:19px;font-size:12px;color:#555a76}
+.auth-links button,.auth-switch button{border:0;background:none;padding:0;color:#24266e;font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.auth-switch{text-align:center;margin:18px 0 0;font-size:13px;color:#5e6070}
+.auth-message{display:none;margin:13px 0 0;padding:10px 12px;border-radius:11px;background:rgba(255,255,255,.65);font-size:12px;color:#30324e;overflow-wrap:anywhere}
+.auth-message.show{display:block}
+.auth-account{display:none;text-align:center}
+.auth-account.is-visible{display:block}
+.auth-account-email{font-weight:650;overflow-wrap:anywhere;color:#292a42;margin:12px 0 20px}
+.auth-signout{border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.45);border-radius:13px;padding:11px 18px;cursor:pointer}
+@keyframes authFade{from{opacity:0}to{opacity:1}}
+@keyframes authCardIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes authFloat{from{transform:translate3d(0,0,0) scale(.92)}to{transform:translate3d(25px,-22px,0) scale(1.08)}}
+@media(max-width:520px){.auth-overlay{padding:13px}.auth-card{padding:32px 21px 23px;border-radius:23px}.auth-heading{font-size:30px}.auth-subtitle{font-size:13px;margin-bottom:22px}.auth-trigger{padding:9px 12px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.auth-overlay:before,.auth-overlay:after{animation:none}.auth-card{animation:none}}
+
 </style>
 </head>
 <body>
@@ -172,6 +211,7 @@ html[data-theme="dark"] #page-register{background-image:radial-gradient(ellipse 
    <a href="#contact" data-page-link="contact">Contact</a><a class="mobile-register-link" href="#register" data-page-link="register">Register</a>
   </nav>
   <div class="nav-actions">
+   <button class="btn btn-outline auth-trigger" id="authTrigger" type="button">Sign In</button>
    <button class="theme-btn" id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">☾</button>
    <a class="btn btn-primary" href="#register" data-page-link="register">Register Your Idea →</a>
   </div>
@@ -367,5 +407,166 @@ html[data-theme="dark"] #page-register{background-image:radial-gradient(ellipse 
  });
 })();
 </script>
+
+<div class="auth-overlay" id="authModal" aria-hidden="true">
+ <section class="auth-card" role="dialog" aria-modal="true" aria-labelledby="authHeading">
+  <button class="auth-close" id="authClose" type="button" aria-label="Close sign in">×</button>
+  <div id="authForms">
+   <h2 class="auth-heading" id="authHeading">Welcome Back</h2>
+   <p class="auth-subtitle" id="authSubtitle">Sign in to your account to continue</p>
+   <form id="authForm">
+    <div class="auth-field"><label for="authEmail">Email Address</label><input id="authEmail" name="email" type="email" autocomplete="email" required placeholder="Enter your email"></div>
+    <div class="auth-field" id="authPasswordWrap"><label for="authPassword">Password</label><input id="authPassword" name="password" type="password" autocomplete="current-password" minlength="6" required placeholder="Enter your password"></div>
+    <button class="auth-submit" id="authSubmit" type="submit">Sign In</button>
+   </form>
+   <div class="auth-divider">OR CONTINUE WITH</div>
+   <button class="auth-social" id="googleSignIn" type="button">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.91c-.58 2.96-2.26 5.48-4.73 7.18l7.66 5.94c4.47-4.13 7.14-10.2 7.14-17.59z"/><path fill="#FBBC05" d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.55 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.91-5.86l-7.66-5.94c-2.13 1.43-4.87 2.28-8.25 2.28-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 43.62 14.62 48 24 48z"/></svg>
+    Continue with Google
+   </button>
+   <div class="auth-links"><button id="forgotPassword" type="button">Forgot your password?</button><span></span></div>
+   <p class="auth-switch" id="authSwitch">Don't have an account? <button id="switchAuthMode" type="button">Sign Up</button></p>
+   <div class="auth-message" id="authMessage" role="status" aria-live="polite"></div>
+  </div>
+  <div class="auth-account" id="authAccount">
+   <h2 class="auth-heading">You're signed in</h2>
+   <p class="auth-subtitle">Your Velvet Labs account is connected.</p>
+   <p class="auth-account-email" id="authAccountEmail"></p>
+   <button class="auth-signout" id="authSignOut" type="button">Sign Out</button>
+  </div>
+ </section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+ "use strict";
+ const SUPABASE_URL="https://wdwbobrkvnntjnansovj.supabase.co";
+ const SUPABASE_PUBLISHABLE_KEY="sb_publishable_p1PoXCkf6B59UZB-WH2liA_VE9q7eMY";
+ const modal=document.getElementById("authModal");
+ const trigger=document.getElementById("authTrigger");
+ const closeButton=document.getElementById("authClose");
+ const form=document.getElementById("authForm");
+ const emailInput=document.getElementById("authEmail");
+ const passwordInput=document.getElementById("authPassword");
+ const passwordWrap=document.getElementById("authPasswordWrap");
+ const heading=document.getElementById("authHeading");
+ const subtitle=document.getElementById("authSubtitle");
+ const submit=document.getElementById("authSubmit");
+ const message=document.getElementById("authMessage");
+ const switchLine=document.getElementById("authSwitch");
+ const switchButton=document.getElementById("switchAuthMode");
+ const forgotButton=document.getElementById("forgotPassword");
+ const googleButton=document.getElementById("googleSignIn");
+ const forms=document.getElementById("authForms");
+ const account=document.getElementById("authAccount");
+ const accountEmail=document.getElementById("authAccountEmail");
+ let mode="signin";
+ let supabaseClient=null;
+
+ function showMessage(text,isError){
+  message.textContent=text;
+  message.style.color=isError?"#8d2638":"#30324e";
+  message.classList.add("show");
+ }
+ function clearMessage(){message.textContent="";message.classList.remove("show");}
+ function setMode(next){
+  mode=next;clearMessage();
+  const signup=mode==="signup", reset=mode==="reset";
+  heading.textContent=signup?"Create Your Account":reset?"Reset Password":"Welcome Back";
+  subtitle.textContent=signup?"Create an account to get started":reset?"We'll email you a secure password reset link":"Sign in to your account to continue";
+  passwordWrap.style.display=reset?"none":"flex";
+  passwordInput.required=!reset;
+  passwordInput.autocomplete=signup?"new-password":"current-password";
+  submit.textContent=signup?"Create Account":reset?"Send Reset Link":"Sign In";
+  switchLine.style.display=reset?"none":"block";
+  switchButton.textContent=signup?"Sign In":"Sign Up";
+  forgotButton.parentElement.style.display=signup||reset?"none":"flex";
+  googleButton.style.display=reset?"none":"flex";
+  clearMessage();
+ }
+ function openAuth(next){
+  if(next)setMode(next);
+  modal.classList.add("is-open");modal.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+  if(!account.classList.contains("is-visible"))setTimeout(()=>emailInput.focus(),100);
+ }
+ function closeAuth(){
+  modal.classList.remove("is-open");modal.setAttribute("aria-hidden","true");
+  document.body.style.overflow="";
+ }
+ function updateAccount(user){
+  if(user){
+   forms.style.display="none";account.classList.add("is-visible");
+   accountEmail.textContent=user.email||"Signed-in user";
+   trigger.textContent="My Account";
+  }else{
+   forms.style.display="block";account.classList.remove("is-visible");
+   trigger.textContent="Sign In";setMode("signin");
+  }
+ }
+ trigger.addEventListener("click",()=>{openAuth();});
+ closeButton.addEventListener("click",closeAuth);
+ modal.addEventListener("click",event=>{if(event.target===modal)closeAuth();});
+ document.addEventListener("keydown",event=>{if(event.key==="Escape"&&modal.classList.contains("is-open"))closeAuth();});
+ switchButton.addEventListener("click",()=>setMode(mode==="signup"?"signin":"signup"));
+ forgotButton.addEventListener("click",()=>setMode("reset"));
+
+ if(!window.supabase||!window.supabase.createClient){
+  trigger.addEventListener("click",()=>showMessage("Authentication could not load. Please refresh the page and try again.",true));
+  return;
+ }
+ supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+ supabaseClient.auth.getSession().then(({data})=>{if(data&&data.session)updateAccount(data.session.user);});
+ supabaseClient.auth.onAuthStateChange((event,session)=>{
+  if(session&&session.user){updateAccount(session.user);}
+  if(event==="PASSWORD_RECOVERY"){openAuth();showMessage("Enter your new password below.");setMode("reset-password");}
+ });
+ form.addEventListener("submit",async event=>{
+  event.preventDefault();clearMessage();
+  const email=emailInput.value.trim(),password=passwordInput.value;
+  submit.disabled=true;
+  try{
+   let result;
+   if(mode==="signup"){
+    result=await supabaseClient.auth.signUp({email,password,options:{emailRedirectTo:window.location.origin}});
+    if(result.error)throw result.error;
+    if(result.data.session){updateAccount(result.data.session.user);showMessage("Your account has been created successfully.");}
+    else showMessage("Account created. Please check your email and confirm your address before signing in.");
+   }else if(mode==="reset-password"){
+    if(password.length<6)throw new Error("Your new password must contain at least 6 characters.");
+    result=await supabaseClient.auth.updateUser({password});
+    if(result.error)throw result.error;
+    setMode("signin");showMessage("Your password has been updated. You can now sign in.");
+   }else if(mode==="reset"){
+    result=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin});
+    if(result.error)throw result.error;
+    showMessage("If an account exists for this email, a password reset link has been sent.");
+   }else{
+    result=await supabaseClient.auth.signInWithPassword({email,password});
+    if(result.error)throw result.error;
+    updateAccount(result.data.user);showMessage("Signed in successfully.");closeAuth();
+   }
+  }catch(error){showMessage(error.message||"Authentication failed. Please try again.",true);}
+  finally{submit.disabled=false;}
+ });
+ googleButton.addEventListener("click",async()=>{
+  clearMessage();googleButton.disabled=true;
+  try{
+   const {error}=await supabaseClient.auth.signInWithOAuth({provider:"google",options:{redirectTo:window.location.origin}});
+   if(error)throw error;
+  }catch(error){showMessage(error.message||"Google sign-in could not start.",true);googleButton.disabled=false;}
+ });
+ document.getElementById("authSignOut").addEventListener("click",async()=>{
+  const {error}=await supabaseClient.auth.signOut();
+  if(error){showMessage(error.message,true);return;}
+  updateAccount(null);closeAuth();
+ });
+ // Password recovery links return with a recovery token in the URL hash.
+ if(window.location.hash.includes("type=recovery")){
+  setMode("reset-password");openAuth();showMessage("Choose a new password for your account.");
+ }
+})();
+</script>
+
 </body>
 </html>
