@@ -458,8 +458,16 @@ html[data-theme="dark"] .site-footer{background:rgba(20,18,29,.38)}
  applyTheme(savedTheme==="dark"?"dark":"light");
  themeButton.addEventListener("click",function(){applyTheme(root.getAttribute("data-theme")==="dark"?"light":"dark");});
 
+ let authSession=null;
+ let currentPage="auth";
+ let pendingProtectedPage=location.hash.slice(1)||"home";
  function showPage(page,updateHash){
    if(!validPages.includes(page)) page="home";
+   if(page!=="auth" && !authSession){
+     pendingProtectedPage=page;
+     page="auth";
+   }
+   currentPage=page;
    document.querySelectorAll(".page").forEach(function(section){
      section.classList.toggle("is-active",section.getAttribute("data-page")===page);
    });
@@ -601,11 +609,37 @@ html[data-theme="dark"] .site-footer{background:rgba(20,18,29,.38)}
  });
  if(authClient){
    authClient.auth.onAuthStateChange(function(event,session){
+     authSession=session;
      renderAuthSession(session);
-     if(event==="PASSWORD_RECOVERY"){setAuthMode("update");}
+     if(event==="PASSWORD_RECOVERY"){
+       setAuthMode("update");
+       showPage("auth",true);
+       return;
+     }
+     if(session && pendingProtectedPage){
+       const destination=pendingProtectedPage;
+       pendingProtectedPage=null;
+       showPage(destination,true);
+     }else if(!session && currentPage!=="auth"){
+       pendingProtectedPage=currentPage;
+       showPage("auth",true);
+     }
    });
-   authClient.auth.getSession().then(({data})=>renderAuthSession(data.session));
- }else{authNotice("Authentication library is unavailable. Please refresh the page.",true);}
+   authClient.auth.getSession().then(({data})=>{
+     authSession=data.session;
+     renderAuthSession(data.session);
+     if(data.session && pendingProtectedPage){
+       const destination=pendingProtectedPage;
+       pendingProtectedPage=null;
+       showPage(destination,true);
+     }else if(!data.session){
+       showPage("auth",false);
+     }
+   });
+ }else{
+   authNotice("Authentication library is unavailable. Please refresh the page.",true);
+   showPage("auth",false);
+ }
 
 
  form.addEventListener("submit",async function(event){
