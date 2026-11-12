@@ -244,6 +244,71 @@ html[data-theme="dark"] .auth-links button,html[data-theme="dark"] .auth-switch,
 @media(prefers-reduced-motion:reduce){#page-auth:before,#page-auth:after,.auth-card{animation:none}}
 
 </style>
+<style id="velvet-glassmorphism">
+/* Velvet Labs — premium glassmorphism layer */
+:root{
+ --bg:#f3f1f7;--surface:rgba(255,255,255,.56);--surface-2:rgba(255,255,255,.38);
+ --line:rgba(255,255,255,.78);--gold:#a98253;--gold-soft:rgba(169,130,83,.13);
+ --nav:rgba(255,255,255,.58);--shadow:0 20px 60px rgba(47,35,66,.10);
+ --glass-blur:22px;
+}
+html[data-theme="dark"]{
+ --bg:#111019;--surface:rgba(39,34,53,.60);--surface-2:rgba(31,28,43,.50);
+ --line:rgba(255,255,255,.13);--nav:rgba(22,19,32,.66);
+ --shadow:0 22px 65px rgba(0,0,0,.30);
+}
+body{
+ background:
+  radial-gradient(ellipse at 12% 8%,rgba(198,174,224,.38),transparent 34%),
+  radial-gradient(ellipse at 88% 22%,rgba(226,203,176,.34),transparent 32%),
+  radial-gradient(ellipse at 52% 88%,rgba(184,174,218,.24),transparent 38%),var(--bg);
+ background-attachment:fixed;
+}
+html[data-theme="dark"] body{
+ background:
+  radial-gradient(ellipse at 12% 8%,rgba(103,75,143,.24),transparent 36%),
+  radial-gradient(ellipse at 88% 22%,rgba(132,96,65,.18),transparent 32%),
+  radial-gradient(ellipse at 52% 88%,rgba(78,72,122,.18),transparent 38%),var(--bg);
+}
+.site-header{
+ background:var(--nav)!important;backdrop-filter:blur(var(--glass-blur)) saturate(155%);
+ -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(155%);
+ border-bottom:1px solid var(--line)!important;box-shadow:0 8px 32px rgba(40,30,55,.06);
+}
+.navbar,.mobile-nav{background:transparent}
+.mobile-nav{backdrop-filter:blur(var(--glass-blur));-webkit-backdrop-filter:blur(var(--glass-blur))}
+.card,.panel,.hero-art,.logo-frame,.page-hero{
+ background:var(--surface)!important;border:1px solid var(--line)!important;
+ box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.48);
+ backdrop-filter:blur(var(--glass-blur)) saturate(145%);
+ -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(145%);border-radius:24px;
+}
+.card,.panel{transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+.card:hover,.panel:hover{
+ transform:translateY(-5px);box-shadow:0 28px 70px rgba(47,35,66,.15),inset 0 1px 0 rgba(255,255,255,.58);
+ border-color:rgba(255,255,255,.95)!important;
+}
+.hero-art{overflow:hidden}
+.btn,.theme-btn,.menu-btn{
+ border:1px solid rgba(255,255,255,.66);box-shadow:0 8px 24px rgba(54,40,70,.10),inset 0 1px 0 rgba(255,255,255,.42);
+ transition:transform .25s ease,box-shadow .25s ease,filter .25s ease;
+}
+.btn:hover,.theme-btn:hover,.menu-btn:hover{transform:translateY(-2px);box-shadow:0 13px 30px rgba(54,40,70,.16)}
+.btn-primary{background:linear-gradient(135deg,#b99770,#94704d)!important;border-color:rgba(255,255,255,.52)!important}
+.btn-outline{background:rgba(255,255,255,.34)!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.field input,.field textarea,.field select{
+ background:rgba(255,255,255,.48)!important;border:1px solid rgba(255,255,255,.82)!important;
+ border-radius:14px!important;box-shadow:inset 0 1px 4px rgba(40,30,55,.04);
+ backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+html[data-theme="dark"] .field input,html[data-theme="dark"] .field textarea,html[data-theme="dark"] .field select{
+ background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.16)!important;
+}
+.site-footer{background:rgba(255,255,255,.30);border-top:1px solid var(--line);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+html[data-theme="dark"] .site-footer{background:rgba(20,18,29,.38)}
+@media(max-width:700px){.card,.panel,.hero-art,.logo-frame,.page-hero{border-radius:19px}body{background-attachment:scroll}}
+@media(prefers-reduced-motion:reduce){.card,.panel,.btn,.theme-btn,.menu-btn{transition:none}.card:hover,.panel:hover,.btn:hover,.theme-btn:hover,.menu-btn:hover{transform:none}}
+</style>
 </head>
 <body>
 <header class="site-header">
