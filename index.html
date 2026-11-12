@@ -471,17 +471,17 @@ html[data-theme="dark"] #page-register{background-image:radial-gradient(ellipse 
  function clearMessage(){message.textContent="";message.classList.remove("show");}
  function setMode(next){
   mode=next;clearMessage();
-  const signup=mode==="signup", reset=mode==="reset";
-  heading.textContent=signup?"Create Your Account":reset?"Reset Password":"Welcome Back";
-  subtitle.textContent=signup?"Create an account to get started":reset?"We'll email you a secure password reset link":"Sign in to your account to continue";
+  const signup=mode==="signup", reset=mode==="reset", recovery=mode==="reset-password";
+  heading.textContent=signup?"Create Your Account":reset?"Reset Password":recovery?"Set New Password":"Welcome Back";
+  subtitle.textContent=signup?"Create an account to get started":reset?"We'll email you a secure password reset link":recovery?"Choose a new password for your account":"Sign in to your account to continue";
   passwordWrap.style.display=reset?"none":"flex";
   passwordInput.required=!reset;
-  passwordInput.autocomplete=signup?"new-password":"current-password";
-  submit.textContent=signup?"Create Account":reset?"Send Reset Link":"Sign In";
-  switchLine.style.display=reset?"none":"block";
+  passwordInput.autocomplete=signup||recovery?"new-password":"current-password";
+  submit.textContent=signup?"Create Account":reset?"Send Reset Link":recovery?"Update Password":"Sign In";
+  switchLine.style.display=reset||recovery?"none":"block";
   switchButton.textContent=signup?"Sign In":"Sign Up";
-  forgotButton.parentElement.style.display=signup||reset?"none":"flex";
-  googleButton.style.display=reset?"none":"flex";
+  forgotButton.parentElement.style.display=signup||reset||recovery?"none":"flex";
+  googleButton.style.display=reset||recovery?"none":"flex";
   clearMessage();
  }
  function openAuth(next){
@@ -516,10 +516,13 @@ html[data-theme="dark"] #page-register{background-image:radial-gradient(ellipse 
   return;
  }
  supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
- supabaseClient.auth.getSession().then(({data})=>{if(data&&data.session)updateAccount(data.session.user);});
+ supabaseClient.auth.getSession().then(({data})=>{if(data&&data.session&&!window.location.hash.includes("type=recovery"))updateAccount(data.session.user);});
  supabaseClient.auth.onAuthStateChange((event,session)=>{
+  if(event==="PASSWORD_RECOVERY"){
+   forms.style.display="block";account.classList.remove("is-visible");
+   setMode("reset-password");openAuth();showMessage("Choose a new password for your account.");return;
+  }
   if(session&&session.user){updateAccount(session.user);}
-  if(event==="PASSWORD_RECOVERY"){openAuth();showMessage("Enter your new password below.");setMode("reset-password");}
  });
  form.addEventListener("submit",async event=>{
   event.preventDefault();clearMessage();
