@@ -323,9 +323,8 @@ html[data-theme="dark"] .site-footer{background:rgba(20,18,29,.38)}
    <a href="#contact" data-page-link="contact">Contact</a><a class="mobile-register-link" href="#register" data-page-link="register">Register</a>
   </nav>
   <div class="nav-actions">
-   <button class="btn btn-outline auth-trigger" id="authTrigger" type="button">Sign In</button>
    <button class="theme-btn" id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">☾</button>
-   <a class="btn btn-outline" href="#auth" data-page-link="auth" id="authNavLink">Sign In</a><a class="btn btn-primary" href="#register" data-page-link="register">Register Your Idea →</a>
+<a class="btn btn-primary" href="#register" data-page-link="register">Register Your Idea →</a>
   </div>
  </div>
 </header>
@@ -405,29 +404,7 @@ html[data-theme="dark"] .site-footer{background:rgba(20,18,29,.38)}
   </form></div></div>
  </section>
 
- <section class="page" id="page-auth" data-page="auth" aria-label="Velvet Labs account authentication">
-  <div class="auth-card">
-   <div class="auth-brand"><span></span> VELVET LABS LTD.</div>
-   <h1 class="auth-heading" id="authHeading">Welcome Back</h1>
-   <p class="auth-subtitle" id="authSubtitle">Sign in to your account to continue</p>
-   <form class="auth-form" id="authForm">
-    <div class="auth-field" id="authNameWrap" hidden><label for="authName">Full Name</label><input id="authName" type="text" autocomplete="name" placeholder="Enter your name"></div>
-    <div class="auth-field"><label for="authEmail">Email Address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="Enter your email"></div>
-    <div class="auth-field" id="authPasswordWrap"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Enter your password" required></div>
-    <button class="auth-primary" id="authSubmit" type="submit">Sign In</button>
-   </form>
-   <div id="authSocial">
-    <div class="auth-divider">OR CONTINUE WITH</div>
-    <button class="auth-google" id="googleSignIn" type="button" aria-label="Continue with Google">
-     <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.76 7.18l7.73 6C44.42 37.95 46.98 31.8 46.98 24.55z"/><path fill="#FBBC05" d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.53 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.73-6c-2.15 1.45-4.92 2.3-8.18 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-     Continue with Google
-    </button>
-   </div>
-   <div class="auth-links" id="authLinks"><button type="button" id="forgotPassword">Forgot your password?</button><span>New here? <button class="auth-switch" type="button" id="authSwitch">Sign up</button></span></div>
-   <div class="auth-message" id="authMessage" role="status" aria-live="polite"></div>
-   <div class="auth-user" id="authUser"><strong id="authUserEmail"></strong><div>You are signed in to Velvet Labs.</div><button type="button" id="authSignOut">Sign Out</button></div>
-  </div>
- </section>
+
 
 </main>
 <footer class="site-footer"><div class="wrap"><div class="footer-row">
@@ -438,13 +415,12 @@ html[data-theme="dark"] .site-footer{background:rgba(20,18,29,.38)}
   <a class="footer-contact-link" href="mailto:velvetlabs4@gmail.com"><span class="footer-mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></span>velvetlabs4@gmail.com</a>
  </div>
  </div><p class="copyright">© <span id="year"></span> Velvet Labs Ltd. All rights reserved.</p></div></footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
  "use strict";
  const root=document.documentElement;
  const themeButton=document.getElementById("themeToggle");
- const validPages=["home","about","services","why-us","contact","register","auth"];
+ const validPages=["home","about","services","why-us","contact","register"];
 
  function applyTheme(theme){
    root.setAttribute("data-theme",theme);
@@ -458,16 +434,8 @@ html[data-theme="dark"] .site-footer{background:rgba(20,18,29,.38)}
  applyTheme(savedTheme==="dark"?"dark":"light");
  themeButton.addEventListener("click",function(){applyTheme(root.getAttribute("data-theme")==="dark"?"light":"dark");});
 
- let authSession=null;
- let currentPage="auth";
- let pendingProtectedPage=location.hash.slice(1)||"home";
  function showPage(page,updateHash){
    if(!validPages.includes(page)) page="home";
-   if(page!=="auth" && !authSession){
-     pendingProtectedPage=page;
-     page="auth";
-   }
-   currentPage=page;
    document.querySelectorAll(".page").forEach(function(section){
      section.classList.toggle("is-active",section.getAttribute("data-page")===page);
    });
@@ -478,7 +446,7 @@ html[data-theme="dark"] .site-footer{background:rgba(20,18,29,.38)}
    });
    if(updateHash && location.hash!=="#"+page) history.pushState({page:page},"","#"+page);
    window.scrollTo({top:0,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
-   document.title=(page==="home"?"Home":page==="why-us"?"Why Us":page==="register"?"Register Your Idea":page==="auth"?"Account":page.charAt(0).toUpperCase()+page.slice(1))+" | Velvet Labs Ltd.";
+   document.title=(page==="home"?"Home":page==="why-us"?"Why Us":page==="register"?"Register Your Idea":page.charAt(0).toUpperCase()+page.slice(1))+" | Velvet Labs Ltd.";
  }
  document.addEventListener("click",function(event){
    const link=event.target.closest("[data-page-link]");
@@ -488,7 +456,6 @@ html[data-theme="dark"] .site-footer{background:rgba(20,18,29,.38)}
  });
  window.addEventListener("popstate",function(){showPage(location.hash.slice(1)||"home",false);});
  showPage(location.hash.slice(1)||"home",false);
- document.getElementById("authTrigger").addEventListener("click",function(){showPage("auth",true);});
 
  document.getElementById("year").textContent=String(new Date().getFullYear());
 
@@ -500,148 +467,6 @@ html[data-theme="dark"] .site-footer{background:rgba(20,18,29,.38)}
  // Use the sb_publishable_ key, NEVER a secret/service_role key.
  const SUPABASE_URL="https://wdwbobrkvnntjnansovj.supabase.co";
  const SUPABASE_PUBLISHABLE_KEY="sb_publishable_p1PoXCkf6B59UZB-WH2liA_VE9q7eMY";
- const authHeading=document.getElementById("authHeading");
- const authSubtitle=document.getElementById("authSubtitle");
- const authForm=document.getElementById("authForm");
- const authNameWrap=document.getElementById("authNameWrap");
- const authPasswordWrap=document.getElementById("authPasswordWrap");
- const authPassword=document.getElementById("authPassword");
- const authSubmit=document.getElementById("authSubmit");
- const authSocial=document.getElementById("authSocial");
- const authLinks=document.getElementById("authLinks");
- const authMessage=document.getElementById("authMessage");
- const authUser=document.getElementById("authUser");
- const authNavLink=document.getElementById("authNavLink");
- let authMode="signin";
- let authClient=null;
- if(window.supabase && SUPABASE_URL.startsWith("https://") && SUPABASE_PUBLISHABLE_KEY.startsWith("sb_publishable_")){
-   authClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
- }
- function authNotice(message,isError){
-   authMessage.textContent=message;
-   authMessage.style.background=isError?"rgba(220,75,95,.13)":"rgba(255,255,255,.65)";
-   authMessage.style.color=isError?"#8b2638":"#41415b";
-   authMessage.classList.add("show");
- }
- function setAuthMode(mode){
-   authMode=mode;
-   authMessage.classList.remove("show");
-   authUser.classList.remove("show");
-   const reset=mode==="reset",update=mode==="update",signup=mode==="signup";
-   authHeading.textContent=signup?"Create Account":reset?"Reset Password":update?"Choose a New Password":"Welcome Back";
-   authSubtitle.textContent=signup?"Create your Velvet Labs account":reset?"We'll email you a secure password reset link":update?"Enter a new password for your account":"Sign in to your account to continue";
-   authNameWrap.hidden=!signup;
-   authPasswordWrap.hidden=reset;
-   authPassword.required=!reset;
-   authPassword.autocomplete=signup||update?"new-password":"current-password";
-   authSubmit.textContent=signup?"Create Account":reset?"Send Reset Link":update?"Update Password":"Sign In";
-   authSocial.hidden=reset||update;
-   authLinks.innerHTML=reset||update?'<span></span><span><button class="auth-switch" type="button" id="backToSignIn">Back to sign in</button></span>':signup?'<span>Already have an account?</span><button class="auth-switch" type="button" id="authSwitch">Sign in</button>':'<button type="button" id="forgotPassword">Forgot your password?</button><span>New here? <button class="auth-switch" type="button" id="authSwitch">Sign up</button></span>';
- }
- authLinks.addEventListener("click",function(e){
-   if(e.target.id==="authSwitch")setAuthMode(authMode==="signup"?"signin":"signup");
-   if(e.target.id==="forgotPassword")setAuthMode("reset");
-   if(e.target.id==="backToSignIn")setAuthMode("signin");
- });
- function renderAuthSession(session){
-   const user=session&&session.user;
-   if(user){
-     document.getElementById("authUserEmail").textContent=user.email||"Signed-in user";
-     authUser.classList.add("show");
-     authSubmit.hidden=true;authForm.querySelectorAll(".auth-field").forEach(el=>el.hidden=true);
-     authSocial.hidden=true;authLinks.hidden=true;
-     authHeading.textContent="You're Signed In";
-     authSubtitle.textContent="Welcome to your Velvet Labs account.";
-     if(authNavLink)authNavLink.textContent="My Account";
-     document.getElementById("authTrigger").textContent="My Account";
-   }else{
-     authUser.classList.remove("show");
-     authSubmit.hidden=false;authForm.querySelectorAll(".auth-field").forEach(el=>{if(el.id==="authNameWrap")el.hidden=authMode!=="signup";else if(el.id==="authPasswordWrap")el.hidden=authMode==="reset";else el.hidden=false;});
-     authLinks.hidden=false;authSocial.hidden=authMode==="reset"||authMode==="update";
-     authHeading.textContent=authMode==="signup"?"Create Account":authMode==="reset"?"Reset Password":"Welcome Back";
-     if(authNavLink)authNavLink.textContent="Sign In";
-     document.getElementById("authTrigger").textContent="Sign In";
-   }
- }
- document.getElementById("googleSignIn").addEventListener("click",async function(){
-   if(!authClient){authNotice("Authentication could not load. Please refresh the page and try again.",true);return;}
-   const button=this;button.disabled=true;
-   try{
-     const {error}=await authClient.auth.signInWithOAuth({provider:"google",options:{redirectTo:window.location.origin+"/#auth"}});
-     if(error)throw error;
-   }catch(error){authNotice(error.message||"Google sign-in could not be started. Check the Google provider settings in Supabase.",true);button.disabled=false;}
- });
- authForm.addEventListener("submit",async function(e){
-   e.preventDefault();authMessage.classList.remove("show");
-   if(!authClient){authNotice("Authentication service did not load. Check your internet connection and refresh.",true);return;}
-   if(!authForm.reportValidity())return;
-   const email=document.getElementById("authEmail").value.trim();
-   const password=authPassword.value;
-   authSubmit.disabled=true;
-   try{
-     let result;
-     if(authMode==="signup"){
-       result=await authClient.auth.signUp({email,password,options:{data:{full_name:document.getElementById("authName").value.trim()},emailRedirectTo:window.location.origin+"/#auth"}});
-       if(result.error)throw result.error;
-       authNotice(result.data.session?"Your account has been created successfully.":"Account created. Please check your email and confirm your address before signing in.",false);
-       if(result.data.session)renderAuthSession(result.data.session);
-     }else if(authMode==="signin"){
-       result=await authClient.auth.signInWithPassword({email,password});
-       if(result.error)throw result.error;
-       renderAuthSession(result.data.session);authNotice("You are now signed in.",false);
-     }else if(authMode==="reset"){
-       result=await authClient.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin+"/#auth"});
-       if(result.error)throw result.error;
-       authNotice("If an account exists for this email, a password reset link has been sent.",false);
-     }else if(authMode==="update"){
-       result=await authClient.auth.updateUser({password});
-       if(result.error)throw result.error;
-       setAuthMode("signin");authNotice("Your password has been updated. You can now sign in.",false);
-     }
-   }catch(error){authNotice(error.message||"Authentication failed. Please try again.",true);}
-   finally{authSubmit.disabled=false;}
- });
- document.getElementById("authSignOut").addEventListener("click",async function(){
-   if(!authClient)return;
-   const {error}=await authClient.auth.signOut();
-   if(error){authNotice(error.message,true);return;}
-   setAuthMode("signin");renderAuthSession(null);authNotice("You have been signed out.",false);
- });
- if(authClient){
-   authClient.auth.onAuthStateChange(function(event,session){
-     authSession=session;
-     renderAuthSession(session);
-     if(event==="PASSWORD_RECOVERY"){
-       setAuthMode("update");
-       showPage("auth",true);
-       return;
-     }
-     if(session && pendingProtectedPage){
-       const destination=pendingProtectedPage;
-       pendingProtectedPage=null;
-       showPage(destination,true);
-     }else if(!session && currentPage!=="auth"){
-       pendingProtectedPage=currentPage;
-       showPage("auth",true);
-     }
-   });
-   authClient.auth.getSession().then(({data})=>{
-     authSession=data.session;
-     renderAuthSession(data.session);
-     if(data.session && pendingProtectedPage){
-       const destination=pendingProtectedPage;
-       pendingProtectedPage=null;
-       showPage(destination,true);
-     }else if(!data.session){
-       showPage("auth",false);
-     }
-   });
- }else{
-   authNotice("Authentication library is unavailable. Please refresh the page.",true);
-   showPage("auth",false);
- }
-
-
  form.addEventListener("submit",async function(event){
    event.preventDefault();
    successMessage.classList.remove("show");
